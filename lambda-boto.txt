@@ -1,0 +1,89 @@
+Create Boto3 Lambda
+====================
+
+"AWS Resources -> Create a new Lambda function"
+
+Function Name: kempyBOTOLambda
+Select blueprint: empty-python
+Function trigger: API Gateway
+Resource Path: /
+Security: NONE
+
+
+********** LAMBDA FUNCTION NEEDS S3 ACCESS **********
+
+
+
+Python Code for Boto3 Lambda
+=============================
+
+import boto3
+import json
+
+def lambda_handler(event, context):
+
+
+    try:
+        event = json.loads(event["body"])
+    except:
+        pass
+
+    region = 'us-west-2'
+    s3=boto3.client('s3',region_name=region)
+    
+    which = ""
+    bucketList = ""
+
+    try: 
+        which = event["bucket"] 
+        resp = s3.list_objects(Bucket=which)['Contents']
+        for item in resp:
+            bucketList += item['Key'] + ","
+    except:
+        which = "all"
+        resp = s3.list_buckets()['Buckets']
+        for bucket in resp:
+            bucketList += bucket['Name'] + ","
+
+
+    
+    retVal = {
+        'statusCode': 200,
+        'headers': { 'Content-Type': 'application/json' },
+        'body': json.dumps( { "bucket": which, "bucketList": bucketList } )
+    }
+    
+    return retVal
+
+
+Payload
+=======
+
+{
+    "bucket": "kempy-cloud9-bootcamp"
+    
+}
+
+
+
+Import Library
+===============
+cd ~/environment/kempyBOTOLambda
+
+pip-3.6 install boto3 -t .
+
+
+
+Invoke URL
+===========
+
+https://ca4rtejsyi.execute-api.us-west-2.amazonaws.com/Prod
+
+Test
+=====
+
+APIs -> cloud9-kempyBOTOLambda -> Resources -> ANY -> Test
+
+    Method: POST
+    Request Body: { "bucket" : "kempy-cloud9-bootcamp" }
+

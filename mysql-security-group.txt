@@ -1,0 +1,33 @@
+Main VPC
+=========
+
+VPCID: vpc-03b4b54482648a14d
+
+	Main-Public-A -- Subnet
+	=======================
+
+	SUBNETID: subnet-0f552cd68da2f5756
+
+
+Create security group
+======================
+Security group name: kempy-mysql-access
+VPC: Main
+
+SGID: sg-08e7b63d877254a65
+
+Inbound Rule: MYSQL/Aurora TCP 3306 sg-08e7b63d877254a65
+
+Attach to RDS and EC2 running Cloud9
+
+
+RDS
+===========
+
+kempyrds
+user: qwerty
+pass: oqiwrk2h350s782kjh5bgo [deleted after bootcamp]
+
+mysql -hkempyrds.crzc9xds3qkq.us-west-2.rds.amazonaws.com -uqwerty -p
+
+aws s3 cp s3://kempy-cloud9-bootcamp/mysqlsampledatabase.sql - | mysql -hkempyrds.crzc9xds3qkq.us-west-2.rds.amazonaws.com -uqwerty -p

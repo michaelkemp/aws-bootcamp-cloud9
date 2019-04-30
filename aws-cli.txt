@@ -1,0 +1,36 @@
+S3 - Simple Storage Service
+===========================
+
+Download Centos ISO into S3
+	df -h
+	curl -L http://isoredirect.centos.org/centos/7/isos/x86_64/CentOS-7-x86_64-DVD-1810.iso | aws s3 cp - s3://kempy-cloud9-bootcamp/CentOS-7-x86_64-DVD-1810.iso
+
+
+List s3
+	aws s3 ls s3://kempy-cloud9-bootcamp
+
+Download File
+	aws s3 cp s3://kempy-cloud9-bootcamp/mysqlsampledatabase.sql mysqlsampledatabase.sql
+
+
+Recursive Delete
+	aws s3 rm s3://kempy-cloud9-bootcamp/ --recursive
+
+
+
+Other CLI Commands
+===================
+
+Documentation
+	https://docs.aws.amazon.com/cli/latest/reference/
+
+List Buckets
+	aws s3 ls
+
+List EC2 Instances
+	aws ec2 describe-instances
+
+List RDS
+	aws rds describe-db-instances --output json | grep "DBInstanceIdentifier"
+
+
